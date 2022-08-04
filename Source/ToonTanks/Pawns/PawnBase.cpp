@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright by Danny Kudinov
 
 
 #include "PawnBase.h"
@@ -20,4 +20,28 @@ APawnBase::APawnBase()
 
 	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
 	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
+}
+
+void APawnBase::RotateTurret(FVector LookAtTarget)
+{
+	FVector LookAtTargetCleaned = FVector(LookAtTarget.X, LookAtTarget.Y, TurretMesh->GetComponentLocation().Z);
+	FVector StartLocation = TurretMesh->GetComponentLocation();
+
+	FRotator TurretRotation = FVector(LookAtTargetCleaned - StartLocation).Rotation();
+	TurretMesh->SetWorldRotation(TurretRotation);
+}
+
+void APawnBase::Fire()
+{
+	// Get ProjectileSpawnPoint Location && Rotation -> Spawn Projectile class at location firing towards Rotation
+}
+
+void APawnBase::HandleDestruction()
+{
+	// Universal functionality
+	// Play death effects particle, sound and camera shake
+
+	// PawnTurret - Inform GameMode that Turret died -> then destroy self
+
+	// PawnTank - Inform GameMode that Player died -> Then Hide() all Components && stop movement input
 }

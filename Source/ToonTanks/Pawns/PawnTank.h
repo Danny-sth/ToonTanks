@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright by Danny Kudinov
 
 #pragma once
 
@@ -28,6 +28,8 @@ class TOONTANKS_API APawnTank : public APawnBase
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Movement", meta=(AllowPrivateAccess = "true"))
 	float RotateSpeed = 250.0f;
 
+	APlayerController* PlayerControllerPtr;
+
 	void CalculateMoveInput(float value);
 	void CalculateRotateInput(float value);
 
@@ -46,4 +48,6 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	virtual void HandleDestruction() override;
 };
