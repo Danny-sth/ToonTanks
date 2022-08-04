@@ -2,7 +2,7 @@
 .idea
 .vs
 .vscode
-Content
+#Content
 DerivedDataCache
 Intermediate
 Saved
