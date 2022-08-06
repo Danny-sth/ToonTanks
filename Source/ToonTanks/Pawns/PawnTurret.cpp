@@ -20,7 +20,7 @@ void APawnTurret::BeginPlay()
 {
 	Super::BeginPlay();
 	GetWorld()->GetTimerManager()
-	          .SetTimer(FireRateTimerHandle, this, &APawnTurret::CheckFireCondition, FireRate, true);
+		.SetTimer(FireRateTimerHandle, this, &APawnTurret::CheckFireCondition, FireRate, true);
 
 	PlayerPawn = Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this, 0));
 }
