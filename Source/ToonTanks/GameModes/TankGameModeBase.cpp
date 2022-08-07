@@ -17,8 +17,19 @@ void ATankGameModeBase::HandleGameStart()
 {
 	TargetTurretsCount = GetTargetTurretCount();
 	PlayerTank = Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this, 0));
+	PlayerControllerPtr = Cast<APlayerControllerBase>(UGameplayStatics::GetPlayerController(this, 0));
 
 	GameStart();
+
+	if (PlayerControllerPtr)
+	{
+		PlayerControllerPtr->SetPlayerEnabledState(false);
+		FTimerHandle PlayerEnableHandle;
+		FTimerDelegate PlayerEnableDelegate = FTimerDelegate::CreateUObject(PlayerControllerPtr,
+		                                                                    &APlayerControllerBase::SetPlayerEnabledState,
+		                                                                    true);
+		GetWorld()->GetTimerManager().SetTimer(PlayerEnableHandle, PlayerEnableDelegate, StartDelay, false);
+	}
 }
 
 void ATankGameModeBase::HandleGameOver(bool PlayerWon)
@@ -32,6 +43,11 @@ void ATankGameModeBase::ActorDied(AActor* DeadActor)
 	{
 		PlayerTank->HandleDestruction();
 		HandleGameOver(false);
+
+		if (PlayerControllerPtr)
+		{
+			PlayerControllerPtr->SetPlayerEnabledState(false);
+		}
 	}
 	else if (APawnTurret* DestroyedTurret = Cast<APawnTurret>(DeadActor))
 	{
