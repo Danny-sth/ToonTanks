@@ -29,6 +29,7 @@ class TOONTANKS_API APawnTank : public APawnBase
 	float RotateSpeed = 250.0f;
 
 	APlayerController* PlayerControllerPtr;
+	bool bIsPlayerAlive = true;
 
 	void CalculateMoveInput(float value);
 	void CalculateRotateInput(float value);
@@ -46,6 +47,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void HandleDestruction() override;
 
+	bool GetIsPlayerAlive();
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
